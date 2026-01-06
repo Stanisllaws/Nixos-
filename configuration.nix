@@ -280,7 +280,7 @@ variant = "";
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    my-c-program.packages.x86_64-linux.default
+    # my-c-program.packages.x86_64-linux.default
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.     
        taffybar
        git # new 17.09
