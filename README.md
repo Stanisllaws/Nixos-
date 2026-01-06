@@ -6,9 +6,11 @@
 - How to configure your own DWM 
   
   1.You need to enable x11 
+
   $ services.xserver.enable = true;
    
    $ # Enable the X11 windowing system.
+
   $ services.xserver.enable = true;
  
 2. Then clone Dwm for suckless website or for exaple my repository 
