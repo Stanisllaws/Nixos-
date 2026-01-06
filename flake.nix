@@ -13,8 +13,8 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     
     # Your C program
-    my-c-program.url = "path:/home/rafal/c-example";
-    my-c-program.inputs.nixpkgs.follows = "nixpkgs";
+   # my-c-program.url = "path:/home/rafal/c-example";
+    # my-c-program.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, my-c-program, ... }: 
@@ -47,7 +47,7 @@
         # Make both stable and unstable packages available
         specialArgs = {
           inherit pkgs-unstable;
-          inherit my-c-program;
+          # inherit my-c-program;
         };
 
         modules = [ 
@@ -60,10 +60,10 @@
             home-manager.useUserPackages = true;
             
             # Pass unstable packages to home-manager too
-            home-manager.extraSpecialArgs = {
-              inherit pkgs-unstable;
-          inherit my-c-program;
-            };
+            #home-manager.extraSpecialArgs = {
+              # inherit pkgs-unstable;
+          # inherit my-c-program;
+            # };
             
             home-manager.users.rafal = import ./home.nix;
           }
