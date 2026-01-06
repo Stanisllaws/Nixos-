@@ -34,10 +34,15 @@ src = ./dotfilles/dwm; # Replace with your actual path
 
  #DWM and override
 services.xserver.windowManager.dwm = {
+  
   enable = true;
+  
   package = pkgs.dwm.overrideAttrs {
+    
     src = ./dotfilles/dwm; # Replace with your actual path
+  
   };
+
 };
 
 Last save you: nixos-rebuild switch or other command to rebuild nixos
