@@ -1,3 +1,4 @@
+
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running 'nixos-help').
@@ -19,7 +20,7 @@ imports =
   boot.loader.efi.canTouchEfiVariables = true;
 
 # Upadtes for nix channels create 13.09.25r.
-   
+
 
   system.autoUpgrade = {
     enable = true;
@@ -39,7 +40,7 @@ imports =
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-  
+
   # new 16.09.25
   #nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -78,7 +79,7 @@ hardware.bluetooth.package = pkgs.bluez;
   # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
 
-  #DWM and override 
+  #DWM and override
 services.xserver.windowManager.dwm = {
   enable = true;
   package = pkgs.dwm.overrideAttrs {
@@ -88,40 +89,31 @@ services.xserver.windowManager.dwm = {
 
 # ST (Simple Terminal) override with custom configuration # MY VERSION
 nixpkgs.config.packageOverrides = pkgs: {
-  st = pkgs.st.overrideAttrs (oldAttrs: 
+  st = pkgs.st.overrideAttrs (oldAttrs:
     let
-      patchesDir = ./dotfilles/st/patches;
-      # Get all .diff and .patch files from patches directory
-      patchFiles = builtins.filter 
-        (name: pkgs.lib.hasSuffix ".diff" name || pkgs.lib.hasSuffix ".patch" name)
-        (builtins.attrNames (builtins.readDir patchesDir));
-      # Convert filenames to full paths using proper string interpolation
-      patches = map (name: patchesDir + ("/" + name)) patchFiles;
     in {
       src = ./dotfilles/st;
       buildInputs = oldAttrs.buildInputs or [] ++ [ pkgs.harfbuzz ];
-      patches = patches;
     });
 };
 
-# Xmonad
 services.xserver.windowManager.xmonad.enable = true;
 services.xserver.windowManager.xmonad.enableContribAndExtras = true;
 
-#i3 wm 
+#i3 wm
 services.xserver.windowManager.i3.enable = true;
 
 #leftwm
-#services.xserver.windowManager.leftwm.enable = true;   
+#services.xserver.windowManager.leftwm.enable = true;
 
-#Spectrwm 
-services.xserver.windowManager.spectrwm.enable = true;  
+#Spectrwm
+services.xserver.windowManager.spectrwm.enable = true;
 
 
 #Sway
 
-  programs.sway.enable = true; 
-  programs.hyprland.enable = true; 
+  programs.sway.enable = true;
+  programs.hyprland.enable = true;
   # niri
   programs.niri.enable = true;
 
@@ -135,19 +127,19 @@ services.xserver.windowManager.spectrwm.enable = true;
 
 
 
-   services.displayManager.ly.enable = true; 
-    #services.displayManager.gdm.enable = true; 
+   services.displayManager.ly.enable = true;
+    #services.displayManager.gdm.enable = true;
   # services.xserver.displayManager.lightdm.enable = true;
    services.desktopManager.plasma6.enable = true;
 
-# Cosmic desktop 
+# Cosmic desktop
 #services.displayManager.cosmic-greeter.enable = true;
 services.desktopManager.cosmic.enable = true;
-# vistualisation 
+# vistualisation
 virtualisation.virtualbox.host.enable = true;
 virtualisation.virtualbox.host.enableExtensionPack = true;
 users.extraGroups.vboxusers.members = [ "rafal" ];
- 
+
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -182,7 +174,7 @@ variant = "";
     samsung-unified-linux-driver
     splix
   ];
-  
+
   # Enable Avahi for network printer discovery
   services.avahi = {
     enable = true;
@@ -218,7 +210,7 @@ variant = "";
     # Monitor standby after 35 minutes, suspend after 40 minutes, off after 45 minutes
     ${pkgs.xorg.xset}/bin/xset dpms 2100 2400 2700
   '';
-  
+
   # Enable screen locking with xss-lock (works with X11 sessions)
   programs.xss-lock = {
     enable = false;
@@ -232,10 +224,10 @@ variant = "";
     lidSwitch = "suspend";           # Options: suspend, hibernate, poweroff, ignore, lock
     lidSwitchDocked = "ignore";      # What to do when lid is closed and docked to external monitor
     lidSwitchExternalPower = "suspend";  # What to do when on external power
-    
+
     # Power button behavior
     powerKey = "suspend";            # Options: suspend, hibernate, poweroff, ignore
-    
+
     # Additional power management settings
     powerKeyLongPress = "poweroff";  # Long press power button
     rebootKey = "reboot";
@@ -260,9 +252,9 @@ variant = "";
     description = "rafal";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      kdePackages.kate  
-      #vim 
-       
+      kdePackages.kate
+      #vim
+
 
     #  thunderbird
     ];
@@ -281,35 +273,35 @@ variant = "";
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # my-c-program.packages.x86_64-linux.default
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.     
+  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
        taffybar
        git # new 17.09
        wget
        dmenu
         st
       pkgs.gimp
-      # brave   
+      # brave
        kitty
      # chromium
-      alacritty  
+      alacritty
     # hyperland pkgs:
       wofi  waybar hyprpaper xmobar # Xmonad status bar
-haskellPackages.xmonad-contrib haskell-language-server pkgs.swaybg 
+haskellPackages.xmonad-contrib haskell-language-server pkgs.swaybg
    # vim pkgs:
-    pkgs.xclip      
+    pkgs.xclip
     pkgs.neovim
     pkgs.ripgrep #Nvim
     pkgs.fd #Nvim
     pkgs.gnumake #Nvim
-    pkgs.stylua 
+    pkgs.stylua
     pkgs.lua-language-server
-    # IDE  
+    # IDE
       pkgs.eclipses.eclipse-cpp pkgs.audacious #MP3 pkgs.picom # x11
       system-config-printer
-      pkgs.krusader #krusader 
+      pkgs.krusader #krusader
       pkgs.brightnessctl # screen brightness
-      sddm-chili-theme 
-      pkgs.xsecurelock # screenlock for X11 
+      sddm-chili-theme
+      pkgs.xsecurelock # screenlock for X11
      #IP and country
       pkgs.ipfetch
       pkgs.fish
@@ -318,7 +310,7 @@ haskellPackages.xmonad-contrib haskell-language-server pkgs.swaybg
           #pkgs.warp-terminal
           pkgs.waveterm
            pkgs.xorg.libX11 # X11 tools
-	  
+	
           #
           pkgs.mpv # terminal mp3 player
           pkgs.neofetch
@@ -328,15 +320,15 @@ haskellPackages.xmonad-contrib haskell-language-server pkgs.swaybg
           pkgs.libreoffice-qt6-fresh
          # pkgs.gccgo15 # GCC-wrapper C COMPUILER
            pkgs.gcc
-	  pkgs.timeshift # serstoring too          
-          pkgs.nemo #file manager           
+	  pkgs.timeshift # serstoring too
+          pkgs.nemo #file manager
           #pkgs.adobe-reader  # adobe-reader 09.11.25
           pkgs.onlyoffice-desktopeditors # office suit
-          pkgs.picom # transparet x11 
+          pkgs.picom # transparet x11
           pkgs.dropbox
           pkgs.dropbox-cli
           pkgs.vlc
-          pkgs.audacity  
+          pkgs.audacity
           pkgs.unzip
 
 # Screen saving and locking packages
@@ -348,13 +340,13 @@ haskellPackages.xmonad-contrib haskell-language-server pkgs.swaybg
           pkgs.rofi
     # UNSTABLE PACKAGES:
     pkgs-unstable.vscode     # Latest VS Code
-    pkgs-unstable.warp-terminal          
-    pkgs-unstable.zoom-us   
+    pkgs-unstable.warp-terminal
+    pkgs-unstable.zoom-us
 pkgs-unstable.chromium
     pkgs-unstable.brave
-    pkgs-unstable.localsend    
-    pkgs-unstable.joplin-desktop # JopLin notatnik z synchronizacją    
-    pkgs-unstable.distrobox    
+    pkgs-unstable.localsend
+    pkgs-unstable.joplin-desktop # JopLin notatnik z synchronizacją
+    pkgs-unstable.distrobox
 
 ];
 
@@ -373,7 +365,7 @@ pkgs-unstable.chromium
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = false;
-  
+
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [  ];
@@ -387,11 +379,11 @@ pkgs-unstable.chromium
 
 # networking.firewall.allowedICMPTypes = [ ];  # Block all ICMP types, including pingi;
 
-  # Restrict printer ports to Brother MFC-J3930DW only 
+  # Restrict printer ports to Brother MFC-J3930DW only
   #networking.firewall.extraCommands = ''
     # Block outbound connections to printer ports except to Brother printer
-    
-  
+
+
 
 
 
@@ -406,7 +398,7 @@ pkgs-unstable.chromium
 
 
 
-             ## koniec  
+             ## koniec
 
 
 
@@ -421,4 +413,3 @@ pkgs-unstable.chromium
 nix.settings.experimental-features = ["nix-command" "flakes" ];
 
 }
-
